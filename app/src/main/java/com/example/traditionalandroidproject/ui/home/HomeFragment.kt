@@ -6,8 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.traditionalandroidproject.databinding.FragmentHomeBinding
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
@@ -29,9 +33,15 @@ class HomeFragment : Fragment() {
 		val root: View = binding.root
 
 		val textView: TextView = binding.textHome
-		homeViewModel.text.observe(viewLifecycleOwner) {
-			textView.text = it
+		lifecycleScope.launch {
+			viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+				homeViewModel.textStateFlow.collect {
+					textView.text = it
+				}
+			}
+
 		}
+
 		return root
 	}
 
