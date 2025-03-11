@@ -1,6 +1,13 @@
 plugins {
 	alias(libs.plugins.android.application)
 	alias(libs.plugins.kotlin.android)
+	id("org.jetbrains.kotlin.kapt")
+	id("com.google.devtools.ksp")
+	id("dagger.hilt.android.plugin")
+
+
+	id("kotlin-kapt")
+	id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -47,8 +54,37 @@ dependencies {
 	implementation(libs.androidx.lifecycle.livedata.ktx)
 	implementation(libs.androidx.lifecycle.viewmodel.ktx)
 	implementation(libs.androidx.navigation.fragment.ktx)
-	implementation(libs.androidx.navigation.ui.ktx)
+	implementation(  libs.androidx.navigation.ui.ktx)
+	implementation(libs.androidx.recyclerview)
 	testImplementation(libs.junit)
 	androidTestImplementation(libs.androidx.junit)
 	androidTestImplementation(libs.androidx.espresso.core)
+
+
+// image
+	implementation(libs.coil.network.okhttp)
+//	implementation(libs.coil.compose)
+
+// network
+	implementation(libs.retrofit)
+	implementation (libs.gson)
+	implementation (libs.retrofit.converter)
+
+// hilt
+	implementation(libs.hilt.android)
+	kapt(libs.hilt.android.compiler)
+
+
+
+
+	// room
+	implementation(libs.androidx.room.runtime)
+	ksp(libs.androidx.room.compiler)
+	implementation(libs.androidx.room.ktx)
+}
+
+
+// Allow references to generated code
+kapt {
+	correctErrorTypes = true
 }
